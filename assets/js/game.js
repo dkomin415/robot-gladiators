@@ -133,6 +133,9 @@ var startGame = function () {
       // use debugger to pause script from running and check what's going on at that moment in the code
       // debugger;
 
+      window.alert("Your Opponent Is " + pickedEnemyObj);
+      window.alert("Your Health Is " + playerInfo.health);
+
       // pass the pickedEnemyName variable's value into the fight function, where it will assume the value of the enemy.name parameter
       fight(pickedEnemyObj);
 
@@ -207,6 +210,16 @@ var shop = function () {
   }
 };
 
+var getPlayerName = function () {
+  var name = "";
+
+  while (name === "" || name === null) {
+    name = prompt ("What is your robot's name?")
+  }
+  console.log("Your robot's name is " + name);
+  return name;
+}
+
 // function to generate a random numeric value
 var randomNumber = function (min, max) {
   var value = Math.floor(Math.random() * (max - min + 1) + min);
@@ -215,7 +228,7 @@ var randomNumber = function (min, max) {
 };
 
 var playerInfo = {
-  name: window.prompt("What is your robot's name?"),
+  name: getPlayerName(),
   health: 100,
   attack: 10,
   money: 10,
