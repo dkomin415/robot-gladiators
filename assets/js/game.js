@@ -133,7 +133,7 @@ var startGame = function () {
       // use debugger to pause script from running and check what's going on at that moment in the code
       // debugger;
 
-      window.alert("Your Opponent Is " + pickedEnemyObj);
+      console.log("Your Opponent Is " + pickedEnemyObj);
       window.alert("Your Health Is " + playerInfo.health);
 
       // pass the pickedEnemyName variable's value into the fight function, where it will assume the value of the enemy.name parameter
@@ -162,21 +162,28 @@ var startGame = function () {
 
 // function to oend the entire game
 var endGame = function () {
-  // if player is still alive, player wins!
-  if (playerInfo.health > 0) {
-    window.alert(
-      "Great job, you've survived the game! You now have a score of " +
-        playerInfo.money +
-        "."
-    );
-  } else {
-    window.alert("You've lost your robot in battle.");
+  window.alert("The game has now ened. Let's see how you did!");
+
+  // check localStorage for high score, if it's not there, use 0
+  var highScore = localStorage.getItem("highscore");
+  if(highScore === null) {
+    highScore = 0;
   }
+
+  // if player has more money than the high score, player has new high score!
+  if(playerInfo.money > highScore) {
+    localStorage.setItem("highscore", playerInfo.money);
+    localStorage.setItem("name", playerInfo.name);
+
+    alert(playerInfo.name + " now has the high score of " + playerInfo.money + "!");
+  } else {
+    alert(playerInfo.name + " did not beat the high score of " + highScore + ". Maybe next time!");
+  }
+
   // ask player if they'd like to play again
   var playAgainConfirm = window.confirm("Would you like to play again?");
 
-  if (playAgainConfirm) {
-    // restart the game
+  if(playAgainConfirm) {
     startGame();
   } else {
     window.alert("Thank you for playing Robot Gladiators! Come back soon!");
@@ -219,6 +226,12 @@ var getPlayerName = function () {
   console.log("Your robot's name is " + name);
   return name;
 }
+
+var randomNumber = function(min, max) {
+  var value = Math.floor(Math.random() * (max - min + 1) + min);
+
+  return value;
+};
 
 var playerInfo = {
   name: getPlayerName(),
